@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -33,6 +35,17 @@ module.exports = {
     static: path.join(__dirname, 'dist'),
     compress: true,
     port: 8080,
-    historyApiFallback: true, // Support for React Router
+    historyApiFallback: true,
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      filename: 'index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public/_redirects', to: '_redirects' },
+      ],
+    }),
+  ],
 };
